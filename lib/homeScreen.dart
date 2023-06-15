@@ -1,5 +1,6 @@
 import 'package:alan_voice/alan_voice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_voice_assistant/secondScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
     initAlan();
   }
 
+  void dispose() {
+    AlanVoice.deactivate();
+    super.dispose();
+  }
+
   initAlan() {
     /// Init Alan Button with project key from Alan AI Studio
     AlanVoice.addButton(sdkKey, buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
@@ -34,6 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
       case "increment":
         increment();
         break;
+      case 'second':
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SecondScreen()));
+        break;
       default:
         debugPrint("Unknown Command");
     }
@@ -43,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   increment() {
     setState(() {
-      counter+=1;
+      counter += 1;
     });
   }
 
@@ -54,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("Alan AI"),
       ),
       body: Center(
-        child: Text("${counter}",textScaleFactor: 25,),
+        child: Text(
+          "${counter}",
+          textScaleFactor: 25,
+        ),
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
